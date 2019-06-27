@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.gw</groupId>
+    <artifactId>mavenDemo</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jmeter.result.jtl.dir>${project.build.directory}\jmeter\results</jmeter.result.jtl.dir>
+        <jmeter.result.html.dir>${project.build.directory}\jmeter\html</jmeter.result.html.dir>
+        <jmeter.result.details.dir>${project.build.directory}\jmeter\details</jmeter.result.details.dir>
+        <jmeter.result.summary.dir>${project.build.directory}\jmeter\summary</jmeter.result.summary.dir>
+        <ReportName>TestReport</ReportName>
+    </properties>
+
+    <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>junit</groupId>-->
+<!--            <artifactId>junit</artifactId>-->
+<!--            <version>3.8.1</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+
+    </dependencies>
+
+    <build>
+        <defaultGoal>compile</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>com.lazerycode.jmeter</groupId>
+                <artifactId>jmeter-maven-plugin</artifactId>
+                <version>2.8.0</version>
+                <configuration>
+                    <!-- 如果不想查看jmeter生成的log,设置为true -->
+                    <suppressJMeterOutput>false</suppressJMeterOutput>
+                    <!--脚本存放模板路径-->
+                    <testFilesDirectory>src/test/jmeter/scripts</testFilesDirectory>
+                    <testFilesIncluded>
+                        <!-- 使用<jMeterTestFiles>选择执行用例 -->
+                        <jMeterTestFile>*.jmx</jMeterTestFile>
+                        <!-- 标签排除用例 -->
+                        <!--<excludeJMeterTestFile>*.jmx</excludeJMeterTestFile>-->
+                    </testFilesIncluded>
+
+                    <generateReports>true</generateReports>
+
+
+
+                    <!-- 默认报告优化，修改jmeter.properties配置 -->
+                    <propertiesJMeter>
+                        <log_level.jmeter>DEBUG</log_level.jmeter>
+<!--                        <jmeter.save.saveservice.output_format>xml</jmeter.save.saveservice.output_format>-->
+                        <jmeter.save.saveservice.subresults>false</jmeter.save.saveservice.subresults>
+                    </propertiesJMeter>
+
+                    <!-- 设置jmeter生成结果文件格式 -->
+                    <resultsFileFormat>xml</resultsFileFormat>
+                    <!-- 设置忽略失败是否停止运行 -->
+                    <ignoreResultFailures>true</ignoreResultFailures>
+                    <!--设置结果是否有时间戳,true为有时间戳。与appendResultsTimestamp (为true时时间拼接在后边) 或resultsFileNameDateFormat(设置输出格式) 搭配使用 -->
+                    <testResultsTimestamp>true</testResultsTimestamp>
+                    <appendResultsTimestamp>true</appendResultsTimestamp>
+                    <!--时间格式最好不要包含除了-外的其他符号，否则无法生成result中的文件导致工程构建失败-->
+                    <resultsFileNameDateFormat>yyyy-MM-dd-HH-mm-ss</resultsFileNameDateFormat>
+
+                    <resultsDirectory>${jmeter.result.jtl.dir}</resultsDirectory>
+
+                    <!-- 增加扩展插件 -->
+                    <jmeterExtensions>
+                        <!--此处自己引入的jar包 -->
+                    </jmeterExtensions>
+
+                    <!-- 增加jar包,需要先将jar注册到本地maven仓库，打开cmd使用如下命令 -->
+                    <!--mvn install:install-file -Dfile=D:\GIT\ZyzxAPIAutoTest\TXPTAPIAutoTest\plugns\jmeter-plugins-json.jar
+                        -DgroupId=com.jmeter.chajian -DartifactId=jmeter-plugins-json -Dversion=2.6
+                        -Dpackaging=jar -->
+                    <!-- <jmeterExtensions> -->
+                    <!-- jmeter扩展插件 json path assert -->
+                    <!-- <artifact>com.atlantbh.jmeter:jmeter-plugins-json:2.7</artifact> -->
+                    <!-- 本地自己写的jar -->
+                    <!-- <artifact>com.smrz:smrz-utils:1.0</artifact> -->
+                    <!-- </jmeterExtensions> -->
+
+
+                    <!-- 使用<testFilesDirectory>指定测试用例的路径 -->
+                    <!-- <testFilesDirectory>/scratch/testfiles/</testFilesDirectory> -->
+
+                </configuration>
+
+                <executions>
+<!--                    <execution>-->
+<!--                        <id>configure</id>-->
+<!--                        <goals>-->
+<!--                            <goal>configure</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+                    <execution>
+                        <id>performance test</id>
+                        <goals>
+                            <goal>jmeter</goal>
+                        </goals>
+                    </execution>
+<!--                    <execution>-->
+<!--                        <id>verify</id>-->
+<!--                        <goals>-->
+<!--                            <goal>results</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>xml-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>transform</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <transformationSets>
+<!--                        <transformationSet>-->
+<!--                            <dir>${jmeter.result.jtl.dir}</dir>-->
+<!--                            <stylesheet>src/test/resources/jmeter-results-detail-report_21.xsl</stylesheet>-->
+<!--                            <outputDir>${jmeter.result.details.dir}</outputDir>-->
+<!--                            <fileMappers>-->
+<!--                                <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">-->
+<!--                                    <targetExtension>html</targetExtension>-->
+<!--                                </fileMapper>-->
+<!--                            </fileMappers>-->
+<!--                        </transformationSet>-->
+
+
+                        <transformationSet>
+                            <dir>${jmeter.result.jtl.dir}</dir>
+                            <stylesheet>src\test\resources\jmeter-results-report_21.xsl</stylesheet>
+                            <outputDir>${jmeter.result.html.dir}</outputDir>
+                            <fileMappers>
+                                <fileMapper
+                                        implementation="org.codehaus.plexus.components.io.filemappers.FileExtensionMapper">
+                                    <targetExtension>html</targetExtension>
+                                </fileMapper>
+                            </fileMappers>
+                        </transformationSet>
+
+
+
+
+                    </transformationSets>
+                </configuration>
+
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>net.sf.saxon</groupId>-->
+<!--                        <artifactId>saxon</artifactId>-->
+<!--                        <version>8.7</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>
