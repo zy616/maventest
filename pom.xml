@@ -114,20 +114,20 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xml-maven-plugin</artifactId>
-                <version>1.0.1</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>transform</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <transformationSets>
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>xml-maven-plugin</artifactId>-->
+<!--                <version>1.0.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>transform</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <configuration>-->
+<!--                    <transformationSets>-->
 <!--                        <transformationSet>-->
 <!--                            <dir>${jmeter.result.jtl.dir}</dir>-->
 <!--                            <stylesheet>src/test/resources/jmeter-results-detail-report_21.xsl</stylesheet>-->
@@ -155,18 +155,18 @@
 
 
 
-                    </transformationSets>
-                </configuration>
+<!--                    </transformationSets>-->
+<!--                </configuration>-->
 
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>net.sf.saxon</groupId>-->
-<!--                        <artifactId>saxon</artifactId>-->
-<!--                        <version>8.7</version>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
+<!--&lt;!&ndash;                <dependencies>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <groupId>net.sf.saxon</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <artifactId>saxon</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <version>8.7</version>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </dependency>&ndash;&gt;-->
+<!--&lt;!&ndash;                </dependencies>&ndash;&gt;-->
 
-            </plugin>
+<!--            </plugin>-->
 
 
         </plugins>
